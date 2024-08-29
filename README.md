@@ -45,7 +45,7 @@ Prerequisites
 You will need to have XAMPP installed, which includes Apache, MySQL, and PHP. Download it from XAMPP.
 
 Installation
-GitHub Desktop: Clone the repository via GitHub Desktop by entering the URL https://github.com/YourRepoLinkHere.git into the URL field and pressing the Clone button.
+GitHub Desktop: Clone the repository via GitHub Desktop by entering the URL https://github.com/2Ricky3/school_system.git into the URL field and pressing the Clone button.
 
 Clone Repository via Command Line:
 
@@ -64,9 +64,16 @@ Ideation
 I envisioned a clean and minimalistic design, focusing on functionality and ease of use. The system allows administrators to manage data with minimal effort while providing a smooth user experience.
 
 Wireframes
-Insert image1
-Insert image2
-Insert image3
+![Alt Text](C:\xampp\htdocs\school_system\Wireframes\Admin.jpg)
+![Alt Text](C:\xampp\htdocs\school_system\Wireframes\Assignments.jpg)
+![Alt Text](C:\xampp\htdocs\school_system\Wireframes\Sign Up.png)
+![Alt Text](C:\xampp\htdocs\school_system\Wireframes\Student Account.jpg)
+![Alt Text](C:\xampp\htdocs\school_system\Wireframes\Student Home2.jpg)
+![Alt Text](C:\xampp\htdocs\school_system\Wireframes\Subject Selection.jpg)
+![Alt Text](C:\xampp\htdocs\school_system\Wireframes\Teacher Account.jpg)
+![Alt Text](C:\xampp\htdocs\school_system\Wireframes\Teacher Home.jpg)
+![Alt Text](C:\xampp\htdocs\school_system\Wireframes\Upload.jpg)
+
 
 Development Process
 Implementation Process
@@ -84,14 +91,13 @@ Future Implementation
 Implement more detailed student reports, including graphs and charts.
 Improve front-end design to be more intuitive and user-friendly.
 Add more security features, including user authentication and role-based access.
+
 Final Outcome
+
 Mockups
-Insert image1
-Insert image2
-Insert image3
 
 Video Demonstration
-View Demonstration
+
 
 License
 Distributed under the MIT License. See LICENSE for more information.
