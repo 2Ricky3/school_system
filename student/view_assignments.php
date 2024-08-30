@@ -70,12 +70,17 @@ $assignments = [
             margin: 10px 0;
             padding: 10px;
             border-radius: 5px;
-            cursor: pointer;
             transition: background-color 0.3s ease;
         }
 
         .assignment-list li:hover {
             background-color: #0c3c9e;
+        }
+
+        .assignment-link {
+            color: white;
+            text-decoration: none;
+            display: block;
         }
 
         .btn-logout {
@@ -107,12 +112,15 @@ $assignments = [
         <h1>Your Assignments</h1>
         <ul class="assignment-list">
             <?php foreach ($assignments as $assignment): ?>
-                <li onclick="window.location.href='submit.assignment.php?assignment_id=<?php echo $assignment['AssignmentID']; ?>'">
-                    <?php echo htmlspecialchars($assignment['AssignmentName']); ?>
+                <li>
+                    <a class="assignment-link" href="upload-assignment.php?assignment_id=<?php echo $assignment['AssignmentID']; ?>">
+                        <?php echo htmlspecialchars($assignment['AssignmentName']); ?>
+                    </a>
                 </li>
             <?php endforeach; ?>
         </ul>
     </div>
 </body>
 </html>
+
 
