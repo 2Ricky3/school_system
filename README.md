@@ -104,11 +104,5 @@ Distributed under the MIT License. See LICENSE for more information.
 
 Contact
 Ricard Oosthuizen
-Email: ricardoosthuizen@example.com
-GitHub: RicardOosthuizen
-
-Acknowledgements
-Stack Overflow
-XAMPP Documentation
-PHP.net
-Flexbox
+Email: ricardoosthuizen@gmail.com
+GitHub: 2Ricky3
