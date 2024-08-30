@@ -1,35 +1,30 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 session_start();
-include('../includes/db_connection.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    include('../includes/db_connection.php');
+    
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Prepare SQL statement to prevent SQL injection
-    $sql = "SELECT * FROM Admin WHERE Username=?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('s', $username);
+    // Check if the username and password match
+    $query = "SELECT AdminID FROM admin WHERE Username = ? AND Password = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("ss", $username, $password);
     $stmt->execute();
     $result = $stmt->get_result();
-    $admin = $result->fetch_assoc();
-
-    // Check if the username exists and the password is correct
-    if ($admin && password_verify($password, $admin['Password'])) {
-        $_SESSION['adminID'] = $admin['AdminID'];
-        header('Location: admin_home.php');
-        exit; // Make sure to exit after redirecting
+    
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        $_SESSION['AdminID'] = $row['AdminID'];
+        header("Location: admin_home.php");
+        exit;
     } else {
-        $error = "Invalid login credentials!";
+        $error = "Invalid username or password.";
     }
 
     $stmt->close();
-}
-
-if (isset($conn)) {
-    mysqli_close($conn);
+    $conn->close();
 }
 ?>
 
@@ -42,66 +37,66 @@ if (isset($conn)) {
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
+            background-color: #0439D9;
+            color: white;
+            margin: 0;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
         }
 
         .login-container {
-            background-color: white;
+            background-color: #056CF2;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            text-align: center;
             width: 300px;
         }
 
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        input[type="text"],
-        input[type="password"] {
+        input[type="text"], input[type="password"] {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        button[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            background-color: #5cb85c;
+            border-radius: 5px;
             border: none;
-            border-radius: 4px;
-            color: white;
             font-size: 16px;
-            cursor: pointer;
         }
 
-        button[type="submit"]:hover {
-            background-color: #4cae4c;
+        input[type="submit"] {
+            background-color: #F2CB05;
+            color: #0439D9;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #F2A105;
         }
 
         .error {
             color: red;
-            text-align: center;
+            font-size: 14px;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
     <div class="login-container">
-        <h2>Admin Login</h2>
-        <?php if (isset($error)) { echo "<div class='error'>$error</div>"; } ?>
-        <form method="POST" action="">
+        <h1>Admin Login</h1>
+        <form method="post" action="admin_login.php">
             <input type="text" name="username" placeholder="Username" required>
             <input type="password" name="password" placeholder="Password" required>
-            <button type="submit">Login</button>
+            <input type="submit" value="Login">
         </form>
+        <?php if (isset($error)): ?>
+            <p class="error"><?php echo $error; ?></p>
+        <?php endif; ?>
     </div>
 </body>
 </html>

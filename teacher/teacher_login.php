@@ -1,62 +1,46 @@
 <?php
-// Include the database connection
-include('../includes/db_connection.php');
-
 session_start();
-
-$loginSuccess = false;
-$error_message = '';
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    include("../includes/db_connection.php");
+
     $name = $_POST['name'];
     $password = $_POST['password'];
 
-    // Prepare the SQL statement to fetch the teacher by name
-    $sql = "SELECT * FROM Teacher WHERE Name = ?";
-    $stmt = $conn->prepare($sql);
+    // Prepare SQL to find the teacher by name
+    $query = "SELECT * FROM teacher WHERE Name = ?";
 
-    if ($stmt) {
+    if ($stmt = $conn->prepare($query)) {
         $stmt->bind_param("s", $name);
         $stmt->execute();
         $result = $stmt->get_result();
 
-        // Check if the teacher exists
-        if ($result->num_rows > 0) {
+        if ($result->num_rows == 1) {
             $teacher = $result->fetch_assoc();
 
-            // Verify the password
+            // Verify the hashed password
             if (password_verify($password, $teacher['Password'])) {
-                // Store the teacher's name in the session
-                $_SESSION['teacher_name'] = $teacher['Name'];
+                $_SESSION['TeacherID'] = $teacher['TeacherID'];
+                $_SESSION['Name'] = $teacher['Name'];
+                $_SESSION['UniqueCode'] = $teacher['UniqueCode'];
 
-                // Mark login as successful
-                $loginSuccess = true;
+                // Redirect to teacher's home page
+                header("Location: teacher_home.php");
+                exit();
             } else {
-                // Password mismatch
-                $error_message = "Invalid password.";
+                $error = "Invalid password.";
             }
         } else {
-            // No teacher found with the provided name
-            $error_message = "No account found with that name.";
+            $error = "Invalid name or password.";
         }
 
         $stmt->close();
     } else {
-        // SQL statement preparation error
-        $error_message = "Error preparing SQL: " . $conn->error;
+        $error = "Database query failed.";
     }
 
     $conn->close();
-
-    // If login was successful, redirect to the home page
-    if ($loginSuccess) {
-        echo "<script>console.log('Login successful, redirecting...');</script>";
-        header("Location: teacher_home.php");
-        exit();
-    } else {
-        // Output any error messages to the console
-        echo "<script>console.log('Login failed: $error_message');</script>";
-    }
 }
 ?>
 
@@ -150,20 +134,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="container">
         <h2>Teacher Login</h2>
-        <form method="POST" action="teacher_login.php">
+        <form method="POST" action="">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
             <button type="submit">Login</button>
         </form>
+        <?php if (isset($error)): ?>
+            <p class="error"><?php echo $error; ?></p>
+        <?php endif; ?>
         <a href="teacher_signup.php">Don't have an account? Sign up here</a>
     </div>
-    <?php
-    // Display any error messages on the page
-    if (!empty($error_message)) {
-        echo "<p class='error'>$error_message</p>";
-    }
-    ?>
 </body>
 </html>
