@@ -1,6 +1,6 @@
 Ricard Oosthuizen
 200200
-DV200 | Term 1
+DV200 | Term 3
 
 School System
 This is a web-based school system that manages student and teacher information, utilizing PHP and MySQL for data storage.
