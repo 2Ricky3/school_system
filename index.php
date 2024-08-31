@@ -22,6 +22,8 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
         }
 
         h1 {
@@ -32,12 +34,14 @@
 
         .row {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
+            flex-wrap: wrap;
             margin-bottom: 20px;
         }
 
         .column {
             flex: 1;
+            min-width: 200px;
             padding: 0 20px;
         }
 
@@ -71,6 +75,7 @@
 
         .admin-options {
             margin-top: 20px;
+            text-align: center; 
         }
 
         .admin-options h2 {
@@ -82,22 +87,18 @@
     <div class="container">
         <h1>High School Glen</h1>
         <div class="row">
-            <!-- Student Options -->
             <div class="column">
                 <h2>Students</h2>
                 <a href="student/student_login.php" class="button">Student Login</a>
                 <a href="student/student_signup.php" class="button">Student Sign Up</a>
             </div>
 
-            <!-- Teacher Options -->
             <div class="column">
                 <h2>Teachers</h2>
                 <a href="teacher/teacher_login.php" class="button">Teacher Login</a>
                 <a href="teacher/teacher_signup.php" class="button">Teacher Sign Up</a>
             </div>
         </div>
-
-        <!-- Admin Options -->
         <div class="admin-options">
             <h2>Admin</h2>
             <a href="admin/admin_login.php" class="button">Admin Login</a>
@@ -105,3 +106,4 @@
     </div>
 </body>
 </html>
+

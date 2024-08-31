@@ -1,13 +1,13 @@
 <?php
 session_start();
 
-// Check if the student is logged in
+
 if (!isset($_SESSION['student_username'])) {
     header("Location: student_login.php");
     exit;
 }
 
-// Fake assignments data
+
 $assignments = [
     ['AssignmentID' => 1, 'AssignmentName' => 'Thoery 1'],
     ['AssignmentID' => 2, 'AssignmentName' => 'Thoery 2'],

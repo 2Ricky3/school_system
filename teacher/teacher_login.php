@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $password = $_POST['password'];
 
-    // Prepare SQL to find the teacher by name
+ 
     $query = "SELECT * FROM teacher WHERE Name = ?";
 
     if ($stmt = $conn->prepare($query)) {
@@ -19,13 +19,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($result->num_rows == 1) {
             $teacher = $result->fetch_assoc();
 
-            // Verify the hashed password
+       
             if (password_verify($password, $teacher['Password'])) {
                 $_SESSION['TeacherID'] = $teacher['TeacherID'];
                 $_SESSION['Name'] = $teacher['Name'];
                 $_SESSION['UniqueCode'] = $teacher['UniqueCode'];
 
-                // Redirect to teacher's home page
+            
                 header("Location: teacher_home.php");
                 exit();
             } else {

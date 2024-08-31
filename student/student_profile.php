@@ -1,16 +1,16 @@
 <?php
 session_start();
 
-// Check if the student is logged in
+
 if (!isset($_SESSION['student_username'])) {
     header("Location: student_login.php");
     exit;
 }
 
 $student_username = $_SESSION['student_username'];
-$current_page = 'profile'; // Set the current page to 'profile'
+$current_page = 'profile'; 
 
-// Fetch student profile information from the database (example only)
+
 include('../includes/db_connection.php');
 $sql = "SELECT * FROM Student WHERE Username = ?";
 $stmt = $conn->prepare($sql);
@@ -91,7 +91,7 @@ $conn->close();
             <p><span>Full Name:</span> <?php echo htmlspecialchars($student_info['FullName']); ?></p>
             <p><span>Email:</span> <?php echo htmlspecialchars($student_info['Email']); ?></p>
             <p><span>Enrollment Date:</span> <?php echo htmlspecialchars($student_info['EnrollmentDate']); ?></p>
-            <!-- Add more profile-specific information here -->
+
         </div>
     </div>
 </body>

@@ -7,7 +7,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Check if the username and password match
     $query = "SELECT AdminID FROM admin WHERE Username = ? AND Password = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("ss", $username, $password);

@@ -1,25 +1,25 @@
 <?php
-// Include the database connection
+
 include('../includes/db_connection.php');
 
-// Start the session
+
 session_start();
 
-// Handle form submission
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Hash the password for secure storage
+    
     $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
-    // Insert the user into the database
+    
     $sql = "INSERT INTO Student (Username, Password) VALUES (?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $username, $hashed_password);
 
     if ($stmt->execute()) {
-        // Redirect to student home page after successful sign-up
+    
         $_SESSION['student_username'] = $username;
         header("Location: student_home.php");
         exit;

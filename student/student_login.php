@@ -1,5 +1,4 @@
 <?php
-// Include database connection
 include('../includes/db_connection.php');
 
 session_start();
@@ -8,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Prepare the SQL statement to prevent SQL injection
+ 
     $sql = "SELECT * FROM Student WHERE Username = ?";
     $stmt = $conn->prepare($sql);
     if ($stmt === false) {
@@ -20,12 +19,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $stmt->get_result();
 
     if ($result->num_rows == 1) {
-        // Fetch the user data
+
         $row = $result->fetch_assoc();
 
-        // Verify the password
         if (password_verify($password, $row['Password'])) {
-            // Successful login
+     
             $_SESSION['student_username'] = $username;
             header("Location: student_home.php");
             exit;

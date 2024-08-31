@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Check if the student is logged in
 if (!isset($_SESSION['student_username'])) {
     header("Location: student_login.php");
     exit;
@@ -9,10 +8,8 @@ if (!isset($_SESSION['student_username'])) {
 
 $student_username = $_SESSION['student_username'];
 
-// Database connection
 include('../includes/db_connection.php');
 
-// Get the student ID
 $student_id_query = "SELECT StudentID FROM Student WHERE Username = ?";
 $stmt = $conn->prepare($student_id_query);
 $stmt->bind_param("s", $student_username);
@@ -28,8 +25,7 @@ if ($result->num_rows == 1) {
 
 $stmt->close();
 
-// Fetch subjects for selection
-$subjects_query = "SELECT SubjectID, SubjectName FROM subject"; // Corrected table name
+$subjects_query = "SELECT SubjectID, SubjectName FROM subject"; 
 $result = $conn->query($subjects_query);
 
 if ($result === false) {

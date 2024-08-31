@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['subject'])) {
         $selected_subject_id = $_POST['subject'];
         
-        // Get students and grades for the selected subject
+       
         $students_query = "SELECT s.StudentID, s.Username, g.Grade 
                            FROM Student s 
                            JOIN Student_Subjects g ON s.StudentID = g.StudentID 
@@ -38,15 +38,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $subject_id = $_POST['subject_id'];
         $new_grade = $_POST['new_grade'];
 
-        // Update grade for the student
+        
         $update_grade_query = "UPDATE Student_Subjects SET Grade = ? WHERE StudentID = ? AND SubjectID = ?";
         $stmt = $conn->prepare($update_grade_query);
         $stmt->bind_param("sii", $new_grade, $student_id, $subject_id);
 
         if ($stmt->execute()) {
-            // Redirect to teacher_home.php after updating the grade
+            
             header("Location: teacher_home.php");
-            exit(); // Ensure the script stops executing after the redirect
+            exit(); 
         } else {
             echo "<p>Error updating grade.</p>";
         }

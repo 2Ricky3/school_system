@@ -1,20 +1,20 @@
 <?php
 session_start();
 
-// Check if the admin is logged in
+
 if (!isset($_SESSION['AdminID'])) {
     header("Location: admin_login.php");
     exit();
 }
 
-// Database connection
+
 include('../includes/db_connection.php');
 
-// Fetch all teachers
+
 $teachers_query = "SELECT TeacherID, Name FROM Teacher";
 $teachers_result = $conn->query($teachers_query);
 
-// Fetch all students
+
 $students_query = "SELECT StudentID, Username FROM Student";
 $students_result = $conn->query($students_query);
 
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['delete_teacher'])) {
         $teacher_id = $_POST['teacher_id'];
         
-        // Delete the teacher from the Teacher table
+
         $delete_teacher_query = "DELETE FROM Teacher WHERE TeacherID = ?";
         $stmt = $conn->prepare($delete_teacher_query);
         $stmt->bind_param("i", $teacher_id);
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } elseif (isset($_POST['delete_student'])) {
         $student_id = $_POST['student_id'];
         
-        // Delete the student from the Student table
+        
         $delete_student_query = "DELETE FROM Student WHERE StudentID = ?";
         $stmt = $conn->prepare($delete_student_query);
         $stmt->bind_param("i", $student_id);
