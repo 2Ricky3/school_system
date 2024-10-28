@@ -26,11 +26,11 @@ $student_username = $_SESSION['student_username'];
 
         .navbar {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             background-color: #056CF2;
-            padding: 10px 0;
-            margin: 0;
+            padding: 15px 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .navbar a {
@@ -39,7 +39,7 @@ $student_username = $_SESSION['student_username'];
             padding: 10px 20px;
             border-radius: 5px;
             transition: background-color 0.3s ease;
-            margin: 0 5px;
+            font-weight: bold;
         }
 
         .navbar a.active, .navbar a:hover {
@@ -48,24 +48,34 @@ $student_username = $_SESSION['student_username'];
         }
 
         .content {
-            padding: 20px;
+            padding: 40px 20px;
             text-align: center;
         }
 
         h1 {
             font-size: 36px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+            font-weight: bold;
         }
 
         .info {
-            font-size: 24px;
-            margin-bottom: 10px;
+            font-size: 20px;
+            margin-bottom: 20px;
         }
 
         .subject-list {
             margin-top: 20px;
-            text-align: left;
-            padding: 0 20px;
+            padding: 20px;
+            background-color: #0a2b6b;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .subject-list h2 {
+            color: #F2CB05;
+            font-size: 24px;
+            margin-bottom: 15px;
+            text-align: center;
         }
 
         .subject-list table {
@@ -75,8 +85,9 @@ $student_username = $_SESSION['student_username'];
 
         .subject-list th, .subject-list td {
             border: 1px solid #fff;
-            padding: 10px;
+            padding: 12px;
             text-align: center;
+            font-size: 18px;
         }
 
         .subject-list th {
@@ -95,14 +106,15 @@ $student_username = $_SESSION['student_username'];
         .btn-select-subjects {
             background-color: #F2CB05;
             color: #0439D9;
-            padding: 10px 20px;
+            padding: 12px 25px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 18px;
+            font-weight: bold;
             text-decoration: none;
-            display: inline-block;
             margin-top: 20px;
+            transition: background-color 0.3s ease;
         }
 
         .btn-select-subjects:hover {
@@ -118,8 +130,7 @@ $student_username = $_SESSION['student_username'];
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            text-decoration: none;
-            display: inline-block;
+            font-weight: bold;
             transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
@@ -128,7 +139,6 @@ $student_username = $_SESSION['student_username'];
             color: #5600FA;
             transform: scale(1.05);
         }
-
 
         .popup-message {
             background-color: rgba(0, 0, 0, 0.8);
@@ -143,6 +153,7 @@ $student_username = $_SESSION['student_username'];
             font-size: 18px;
             display: none;
             z-index: 9999;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
         .popup-message button {
@@ -164,20 +175,16 @@ $student_username = $_SESSION['student_username'];
 </head>
 <body>
 
-<?php
-
-if (isset($_GET['status']) && $_GET['status'] == 'success'): ?>
+<?php if (isset($_GET['status']) && $_GET['status'] == 'success'): ?>
     <div class="popup-message" id="popupMessage">
         <p>Submitted successfully!</p>
         <button onclick="closePopup()">OK</button>
     </div>
     <script>
-  
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('popupMessage').style.display = 'block';
         });
 
- 
         function closePopup() {
             document.getElementById('popupMessage').style.display = 'none';
         }
@@ -195,10 +202,8 @@ if (isset($_GET['status']) && $_GET['status'] == 'success'): ?>
     <p class="info">Here you can view your subjects and grades.</p>
 
     <?php
-
     include('../includes/db_connection.php');
 
- 
     $student_id_query = "SELECT StudentID FROM Student WHERE Username = ?";
     $stmt = $conn->prepare($student_id_query);
     $stmt->bind_param("s", $student_username);
@@ -213,7 +218,6 @@ if (isset($_GET['status']) && $_GET['status'] == 'success'): ?>
     }
 
     $stmt->close();
-
 
     $subjects_query = "SELECT s.SubjectName, ss.SubjectID, ss.Grade 
                        FROM Student_Subjects ss
@@ -260,4 +264,3 @@ if (isset($_GET['status']) && $_GET['status'] == 'success'): ?>
 
 </body>
 </html>
-

@@ -6,12 +6,10 @@ if (!isset($_SESSION['TeacherID'])) {
     exit();
 }
 
-// Database connection
 include('../includes/db_connection.php');
 
 $teacher_id = $_SESSION['TeacherID'];
 
-// Get teacher's subjects
 $subject_query = "SELECT SubjectID, SubjectName FROM Subject WHERE TeacherID = ?";
 $stmt = $conn->prepare($subject_query);
 $stmt->bind_param("i", $teacher_id);
@@ -22,8 +20,7 @@ $subjects = $subjects_result->fetch_all(MYSQLI_ASSOC);
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['subject'])) {
         $selected_subject_id = $_POST['subject'];
-        
-       
+
         $students_query = "SELECT s.StudentID, s.Username, g.Grade 
                            FROM Student s 
                            JOIN Student_Subjects g ON s.StudentID = g.StudentID 
@@ -38,17 +35,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $subject_id = $_POST['subject_id'];
         $new_grade = $_POST['new_grade'];
 
-        
         $update_grade_query = "UPDATE Student_Subjects SET Grade = ? WHERE StudentID = ? AND SubjectID = ?";
         $stmt = $conn->prepare($update_grade_query);
         $stmt->bind_param("sii", $new_grade, $student_id, $subject_id);
 
         if ($stmt->execute()) {
-            
             header("Location: teacher_home.php");
             exit(); 
         } else {
-            echo "<p>Error updating grade.</p>";
+            echo "<p class='error'>Error updating grade.</p>";
         }
 
         $stmt->close();
@@ -77,9 +72,10 @@ $conn->close();
         
         .navbar {
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
+            padding: 15px 30px;
             background-color: #056CF2;
-            padding: 10px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .navbar a {
@@ -88,6 +84,7 @@ $conn->close();
             padding: 10px 20px;
             border-radius: 5px;
             transition: background-color 0.3s ease;
+            font-weight: bold;
         }
 
         .navbar a.active, .navbar a:hover {
@@ -96,56 +93,64 @@ $conn->close();
         }
 
         .content {
-            padding: 20px;
+            padding: 40px;
             text-align: center;
         }
 
         h1 {
             font-size: 36px;
-            margin-bottom: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
         }
 
         .info {
-            font-size: 24px;
-            margin-bottom: 10px;
+            font-size: 20px;
+            margin-bottom: 30px;
         }
 
         form {
             margin: 20px 0;
+            display: inline-block;
         }
 
         select {
-            padding: 10px;
+            padding: 12px;
             font-size: 16px;
             border-radius: 5px;
             border: 1px solid #ddd;
+            margin-right: 10px;
         }
 
         input[type="submit"] {
             background-color: #056CF2;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 20px;
             font-size: 16px;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-weight: bold;
         }
 
         input[type="submit"]:hover {
             background-color: #0439D9;
+            transform: scale(1.05);
         }
 
         table {
             width: 100%;
+            max-width: 800px;
+            margin: 30px auto;
             border-collapse: collapse;
-            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         th, td {
             border: 1px solid #fff;
-            padding: 10px;
+            padding: 12px;
             text-align: center;
+            font-size: 16px;
         }
 
         th {
@@ -161,8 +166,31 @@ $conn->close();
             background-color: #0a2b6b;
         }
 
-        .grade-form {
-            margin-top: 20px;
+        .grade-form input[type="text"] {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            width: 60px;
+            margin-right: 10px;
+            text-align: center;
+        }
+
+        .grade-form input[type="submit"] {
+            background-color: #F2CB05;
+            color: #0439D9;
+            border: none;
+            padding: 8px 12px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+        }
+
+        .grade-form input[type="submit"]:hover {
+            background-color: #FADD00;
+            color: #5600FA;
         }
     </style>
 </head>

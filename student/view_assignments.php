@@ -1,16 +1,14 @@
 <?php
 session_start();
 
-
 if (!isset($_SESSION['student_username'])) {
     header("Location: student_login.php");
     exit;
 }
 
-
 $assignments = [
-    ['AssignmentID' => 1, 'AssignmentName' => 'Thoery 1'],
-    ['AssignmentID' => 2, 'AssignmentName' => 'Thoery 2'],
+    ['AssignmentID' => 1, 'AssignmentName' => 'Theory 1'],
+    ['AssignmentID' => 2, 'AssignmentName' => 'Theory 2'],
     ['AssignmentID' => 3, 'AssignmentName' => 'Historical Essay'],
     ['AssignmentID' => 4, 'AssignmentName' => 'English Literature Review']
 ];
@@ -32,9 +30,11 @@ $assignments = [
 
         .navbar {
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
+            align-items: center;
             background-color: #056CF2;
-            padding: 10px 0;
+            padding: 15px 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .navbar a {
@@ -43,6 +43,7 @@ $assignments = [
             padding: 10px 20px;
             border-radius: 5px;
             transition: background-color 0.3s ease;
+            font-weight: bold;
         }
 
         .navbar a.active, .navbar a:hover {
@@ -51,35 +52,42 @@ $assignments = [
         }
 
         .content {
-            padding: 20px;
+            padding: 40px 20px;
             text-align: center;
         }
 
         h1 {
             font-size: 36px;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            font-weight: bold;
         }
 
         .assignment-list {
             list-style-type: none;
             padding: 0;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         .assignment-list li {
             background-color: #0a2b6b;
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
+            margin: 15px 0;
+            padding: 15px 20px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .assignment-list li:hover {
             background-color: #0c3c9e;
+            transform: scale(1.02);
         }
 
         .assignment-link {
             color: white;
             text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
             display: block;
         }
 
@@ -91,13 +99,15 @@ $assignments = [
             font-size: 16px;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease;
             text-decoration: none;
+            font-weight: bold;
         }
 
         .btn-logout:hover {
-            background-color: #F2CB05;
-            color: #0439D9;
+            background-color: #FADD00;
+            transform: scale(1.05);
+            color: #5600FA;
         }
     </style>
 </head>
@@ -122,5 +132,3 @@ $assignments = [
     </div>
 </body>
 </html>
-
-

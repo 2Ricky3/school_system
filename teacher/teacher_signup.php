@@ -5,25 +5,22 @@ include('../includes/db_connection.php');
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = $_POST['name']; // Get the name from the form
-    $password = $_POST['password']; // Get the password from the form
-    $teacher_code = $_POST['teacher_code']; // Get the teacher code from the form
+    $name = $_POST['name'];
+    $password = $_POST['password'];
+    $teacher_code = $_POST['teacher_code'];
 
     // Verify the teacher code
     $valid_teacher_code = 'TEACHER123'; // Replace with the actual code you want to use
 
     if ($teacher_code === $valid_teacher_code) {
-        // Hash the password before storing it
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        // Insert the teacher into the database
         $sql = "INSERT INTO Teacher (UniqueCode, Name, Password) VALUES (?, ?, ?)";
         $stmt = $conn->prepare($sql);
         if ($stmt) {
             $stmt->bind_param("sss", $teacher_code, $name, $hashed_password);
 
             if ($stmt->execute()) {
-                // Redirect to teacher home page after successful sign-up
                 $_SESSION['teacher_name'] = $name;
                 header("Location: teacher_home.php");
                 exit;
@@ -63,54 +60,64 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         .container {
             background-color: #056CF2;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
             width: 100%;
             max-width: 400px;
             text-align: center;
         }
 
         h2 {
-            margin-bottom: 20px;
-            font-size: 24px;
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: bold;
             color: #F2CB05;
         }
 
         form {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
         }
 
         label {
-            font-size: 16px;
+            font-size: 18px;
             color: #F2CB05;
             margin-bottom: 5px;
             text-align: left;
         }
 
         input {
-            padding: 10px;
-            border-radius: 4px;
+            padding: 12px;
+            border-radius: 6px;
             border: 1px solid #ccc;
+            font-size: 16px;
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #F2CB05;
+            box-shadow: 0 0 8px rgba(242, 203, 5, 0.5);
         }
 
         button {
-            padding: 10px;
+            padding: 12px;
             background-color: #F2CB05;
             color: #0439D9;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: bold;
             cursor: pointer;
-            font-size: 16px;
             transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
         }
 
         button:hover {
-            background-color: #056CF2;
-            color: #FFFFFF;
-            transform: scale(1.1);
+            background-color: #FFFFFF;
+            color: #056CF2;
+            transform: scale(1.05);
         }
 
         .error {
@@ -120,13 +127,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         a {
             display: block;
-            margin-top: 10px;
+            margin-top: 15px;
             color: #F2CB05;
+            font-size: 16px;
             text-decoration: none;
         }
 
         a:hover {
             text-decoration: underline;
+            color: #FFFFFF;
         }
     </style>
 </head>
@@ -145,6 +154,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <button type="submit">Sign Up</button>
         </form>
+        <?php if (isset($error)): ?>
+            <p class="error"><?php echo $error; ?></p>
+        <?php endif; ?>
         <a href="teacher_login.php">Already have an account? Login here</a>
     </div>
 </body>

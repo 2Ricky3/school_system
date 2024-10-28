@@ -1,4 +1,4 @@
-<?php
+<?php 
 session_start();
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
@@ -8,7 +8,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $password = $_POST['password'];
 
- 
     $query = "SELECT * FROM teacher WHERE Name = ?";
 
     if ($stmt = $conn->prepare($query)) {
@@ -19,13 +18,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($result->num_rows == 1) {
             $teacher = $result->fetch_assoc();
 
-       
             if (password_verify($password, $teacher['Password'])) {
                 $_SESSION['TeacherID'] = $teacher['TeacherID'];
                 $_SESSION['Name'] = $teacher['Name'];
                 $_SESSION['UniqueCode'] = $teacher['UniqueCode'];
 
-            
                 header("Location: teacher_home.php");
                 exit();
             } else {
@@ -64,54 +61,64 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         .container {
             background-color: #056CF2;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
             width: 100%;
             max-width: 400px;
             text-align: center;
         }
 
         h2 {
-            margin-bottom: 20px;
-            font-size: 24px;
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: bold;
             color: #F2CB05;
         }
 
         form {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
         }
 
         label {
-            font-size: 16px;
+            font-size: 18px;
             color: #F2CB05;
             margin-bottom: 5px;
             text-align: left;
         }
 
         input {
-            padding: 10px;
-            border-radius: 4px;
+            padding: 12px;
+            border-radius: 6px;
             border: 1px solid #ccc;
+            font-size: 16px;
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #F2CB05;
+            box-shadow: 0 0 8px rgba(242, 203, 5, 0.5);
         }
 
         button {
-            padding: 10px;
+            padding: 12px;
             background-color: #F2CB05;
             color: #0439D9;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: bold;
             cursor: pointer;
-            font-size: 16px;
             transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
         }
 
         button:hover {
-            background-color: #056CF2;
-            color: #FFFFFF;
-            transform: scale(1.1);
+            background-color: #FFFFFF;
+            color: #056CF2;
+            transform: scale(1.05);
         }
 
         .error {
@@ -121,13 +128,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         a {
             display: block;
-            margin-top: 10px;
+            margin-top: 15px;
             color: #F2CB05;
+            font-size: 16px;
             text-decoration: none;
         }
 
         a:hover {
             text-decoration: underline;
+            color: #FFFFFF;
         }
     </style>
 </head>
