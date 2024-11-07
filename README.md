@@ -9,10 +9,6 @@ This is a web-based school system that manages student and teacher information, 
 
 ---
 
-## Report Bug | Request Feature
-
----
-
 ## Table of Contents
 1. [About the Project](#about-the-project)
    - [Project Description](#project-description)
